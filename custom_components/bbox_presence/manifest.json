@@ -1,0 +1,14 @@
+{
+  "codeowners": ["@MariusTechLab"],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/MariusTechLab/bbox-presence",
+  "domain": "bbox_presence",
+  "integration_type": "hub",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/MariusTechLab/bbox-presence/issues",
+  "name": "Bbox Presence",
+  "requirements": [],
+  "single_config_entry": true,
+  "version": "1.0.0"
+}

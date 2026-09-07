@@ -1,0 +1,55 @@
+{
+  "title": "Présence Bbox",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connexion à la Bbox",
+        "description": "L'intégration lit localement /api/v1/hosts. Essayez d'abord sans mot de passe. Si votre Bbox exige une session, saisissez son mot de passe administrateur.",
+        "data": {
+          "host": "Nom d'hôte ou adresse IP de la Bbox",
+          "password": "Mot de passe administrateur Bbox (facultatif)",
+          "scan_interval": "Intervalle d'interrogation (secondes)",
+          "consider_home": "Délai avant de déclarer un appareil absent (secondes)"
+        }
+      },
+      "devices": {
+        "title": "Choisir les appareils de présence",
+        "description": "Sélectionnez les téléphones ou autres appareils Wi-Fi qui doivent compter pour l'occupation du domicile. Seuls ces appareils auront une entité de suivi.",
+        "data": {
+          "tracked_macs": "Appareils utilisés pour la présence"
+        }
+      }
+    },
+    "error": {
+      "auth_required": "La Bbox exige une authentification. Saisissez son mot de passe administrateur.",
+      "cannot_connect": "Impossible de joindre l'API de la Bbox. Vérifiez l'adresse et les journaux Home Assistant.",
+      "no_devices_selected": "Sélectionnez au moins un appareil.",
+      "no_hosts": "La Bbox répond, mais aucun appareil n'a été trouvé."
+    },
+    "abort": {
+      "already_configured": "Une Bbox est déjà configurée."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Options de Présence Bbox",
+        "data": {
+          "scan_interval": "Intervalle d'interrogation (secondes)",
+          "consider_home": "Délai avant de déclarer un appareil absent (secondes)",
+          "tracked_macs": "Appareils utilisés pour la présence"
+        }
+      }
+    },
+    "error": {
+      "no_devices_selected": "Sélectionnez au moins un appareil."
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "house_occupancy": {
+        "name": "Occupation du domicile"
+      }
+    }
+  }
+}

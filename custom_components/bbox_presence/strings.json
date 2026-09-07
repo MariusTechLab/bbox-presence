@@ -1,0 +1,55 @@
+{
+  "title": "Bbox Presence",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to the Bbox",
+        "description": "The integration reads the local /api/v1/hosts endpoint. Try without a password first. If your Bbox requires a session, enter its administrator password.",
+        "data": {
+          "host": "Bbox host or IP address",
+          "password": "Bbox administrator password (optional)",
+          "scan_interval": "Polling interval (seconds)",
+          "consider_home": "Delay before marking a device away (seconds)"
+        }
+      },
+      "devices": {
+        "title": "Select presence devices",
+        "description": "Choose the phones or other Wi-Fi devices that should count toward home occupancy. Only selected devices get tracker entities.",
+        "data": {
+          "tracked_macs": "Devices used for occupancy"
+        }
+      }
+    },
+    "error": {
+      "auth_required": "The Bbox requires authentication. Enter its administrator password.",
+      "cannot_connect": "Unable to connect to the Bbox API. Check the address and Home Assistant logs.",
+      "no_devices_selected": "Select at least one device.",
+      "no_hosts": "The API answered, but no hosts were found."
+    },
+    "abort": {
+      "already_configured": "A Bbox is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Bbox Presence options",
+        "data": {
+          "scan_interval": "Polling interval (seconds)",
+          "consider_home": "Delay before marking a device away (seconds)",
+          "tracked_macs": "Devices used for occupancy"
+        }
+      }
+    },
+    "error": {
+      "no_devices_selected": "Select at least one device."
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "house_occupancy": {
+        "name": "House occupancy"
+      }
+    }
+  }
+}
