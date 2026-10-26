@@ -1,18 +1,54 @@
 # Bbox Presence for Home Assistant
 
-Local presence detection for Bouygues Telecom Bbox routers. The integration
-polls the router's local `/api/v1/hosts` endpoint and creates:
+[![HACS](https://img.shields.io/badge/HACS-custom-orange.svg)](https://hacs.xyz/docs/faq/custom_repositories/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-- one `device_tracker` per device selected during setup;
-- one occupancy `binary_sensor` that is on when at least one selected device
-  is home.
+"Is anyone home?" from your Bouygues Telecom Bbox, without giving Home
+Assistant the router's admin password.
 
-Presence is checked against both the general Bbox host list and the Wi-Fi
-station tables. A configurable departure delay reduces false absences when a
-phone briefly sleeps or roams between access points.
+Pick the phones that count, and you get:
+
+- one `device_tracker` per selected device;
+- one **house occupancy** `binary_sensor`, on while at least one of them is
+  home, ready to use in automations (heating, alarm, lights);
+- a **departure delay** you set in the UI, so a phone that sleeps or switches
+  between access points for a minute doesn't mark the house as empty.
+
+Everything stays on the local network, with no external library and no cloud.
 
 > This is an independent community project. It is not affiliated with or
 > supported by Bouygues Telecom.
+
+## Bbox Presence or hass-bbox2?
+
+[hass-bbox2](https://github.com/Cyr-ius/hass-bbox2) is the full Bbox
+integration: traffic sensors, WAN status, Wi-Fi switches, router restart,
+phone ring, and trackers for all connected devices. If you want to control the
+router, use it.
+
+Bbox Presence only does presence, with a different trade-off:
+
+| | Bbox Presence | hass-bbox2 |
+|---|---|---|
+| Router admin password | often not needed: asked only if your Bbox requires it | required |
+| House occupancy sensor | built in | build your own (group or template) |
+| Departure delay | set in the UI | `consider_home`, set by hand |
+| Devices tracked | only the ones you select | all connected devices (wired optional) |
+| Presence signal | host list and Wi-Fi station tables | host list |
+| Router control and traffic sensors | no | yes |
+| External dependency | none | `bboxpy` |
+
+Both can run side by side.
+
+## Install in one click
+
+[![Open your Home Assistant instance and open this repository in HACS.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=MariusTechLab&repository=bbox-presence&category=integration)
+
+After downloading and restarting Home Assistant:
+
+[![Open your Home Assistant instance and start setting up Bbox Presence.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=bbox_presence)
+
+Step-by-step instructions are in [Installation](#installation).
 
 ## Requirements
 
@@ -26,6 +62,13 @@ URLs, or a complete Home Assistant backup in an issue.
 
 ## Installation
 
+### HACS (recommended)
+
+1. Use the button above, or add `https://github.com/MariusTechLab/bbox-presence`
+   to HACS as a custom repository of type **Integration**.
+2. Download **Bbox Presence** and restart Home Assistant.
+3. Follow steps 3–7 below.
+
 ### Manual
 
 1. Copy `custom_components/bbox_presence` to your Home Assistant
@@ -37,12 +80,6 @@ URLs, or a complete Home Assistant backup in an issue.
 6. Try without a password first. Enter the Bbox administrator password only if
    the integration reports that authentication is required.
 7. Select the devices that should count toward occupancy.
-
-### HACS custom repository
-
-Add `https://github.com/MariusTechLab/bbox-presence` to HACS as an
-**Integration**, install it, restart Home Assistant, and then follow steps 3–7
-above.
 
 ## Options
 
