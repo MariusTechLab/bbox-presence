@@ -22,3 +22,29 @@ jobs:
       - uses: hacs/action@main
         with:
           category: integration
+
+  translations:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: en.json matches strings.json, every language has the same keys
+        run: |
+          python3 - <<'PY'
+          import json, pathlib, sys
+          base = pathlib.Path("custom_components/bbox_presence")
+          strings = json.loads((base / "strings.json").read_text(encoding="utf-8"))
+          def keys(d, p=""):
+              out = set()
+              for k, v in d.items():
+                  out |= keys(v, f"{p}{k}.") if isinstance(v, dict) else {p + k}
+              return out
+          errors = []
+          if json.loads((base / "translations/en.json").read_text(encoding="utf-8")) != strings:
+              errors.append("translations/en.json differs from strings.json")
+          for path in sorted((base / "translations").glob("*.json")):
+              diff = keys(strings) ^ keys(json.loads(path.read_text(encoding="utf-8")))
+              if diff:
+                  errors.append(f"{path.name}: keys differ: {sorted(diff)}")
+          print("\n".join(errors) or "translations ok")
+          sys.exit(1 if errors else 0)
+          PY
